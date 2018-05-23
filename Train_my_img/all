@@ -1,0 +1,82 @@
+四、创建模型并编写配置文件
+
+    模型就用程序自带的caffenet模型，位置在models/bvlc_reference_caffenet/文件夹下，将需要的两个配置文件，复制到myfile文件夹内
+
+    #sudo cp models/bvlc_reference_caffenet/solver.prototxt examples/myfile/
+
+    #sudo cp models/bvlc_reference_caffenet/train_val.prototxt examples/myfile/
+
+    修改其中的solver.prototxt
+
+    #sudo vi examples/myfile/solver.prototxt
+
+    输入以下内容：
+
+     net: "examples/myfile/train_val.prototxt"
+     test_iter: 2
+     test_interval: 50
+     base_lr: 0.001
+     lr_policy: "step"
+    gamma: 0.1
+    stepsize: 100
+    display: 20
+    max_iter: 500
+    momentum: 0.9
+    weight_decay: 0.005
+    solver_mode: GPU
+
+    注：电脑没有GPU的同学，solver_mode:CPU
+
+    100个测试数据，batch_size为50，因此test_iter设置为2，就能全覆盖了。在训练过程中，调整学习率，逐步变小。
+
+    修改train_val.prototxt,只需要修改两个阶段的data层就可以了，其他可以不用管。
+
+    name: "CaffeNet"
+    layer {
+        name: "data"
+        type: "Data"
+        top: "data"
+        top: "label"
+    include {
+        phase: TRAIN
+    }
+    transform_param {
+        mirror: true
+        crop_size: 227
+        mean_file: "examples/myfile/mean.binaryproto"
+     }
+    data_param {
+        source: "examples/myfile/img_train_lmdb"
+        batch_size: 256
+        backend: LMDB
+     }
+    }
+     layer {
+         name: "data"
+         type: "Data"
+         top: "data"
+         top: "label"
+     include {
+         phase: TEST
+     }
+     transform_param {
+         mirror: false
+         crop_size: 227
+         mean_file: "examples/myfile/mean.binaryproto"
+     }
+     data_param {
+         source: "examples/myfile/img_test_lmdb"
+         batch_size: 50
+         backend: LMDB
+    }
+   }
+
+    实际上就是修改两个data layer的mean_file和source这两个地方，其他都没有变化。
+
+五、训练
+
+    如果前面都没有问题，数据准备好了，配置文件也配置好了，这一步就比较简单了。
+
+    #sudo build/tools/caffe train -solver examples/myfile/solver.prototxt
+
+    运行时间和最后的精度，会根据机器配置，参数设置的不同而不同。我的机器运行500次，大约15分钟左右，精度为95%。
