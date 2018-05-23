@@ -77,6 +77,15 @@
 
     如果前面都没有问题，数据准备好了，配置文件也配置好了，这一步就比较简单了。
 
-    #sudo build/tools/caffe train -solver examples/myfile/solver.prototxt
+    #sudo /home/zj/caffe/build/tools/caffe train -solver /home/zj/caffe/examples/myfile/solver.prototxt
 
     运行时间和最后的精度，会根据机器配置，参数设置的不同而不同。我的机器运行500次，大约15分钟左右，精度为95%。
+    
+    #!/usr/bin/env sh
+set -e
+
+./home/zj/caffe/build/tools/caffe train \
+    --solver=/home/zj/caffe/examples/myfile/solver.prototxt $@
+    
+    
+    
