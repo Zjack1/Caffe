@@ -19,6 +19,6 @@ def lenet(lmdb,batch_size):
 	return n.to_proto()
 
 with open('lenet_auto_train.prototxt','w') as f:
-	f.write(str(lenet('/home/zj/caffe/examples/my/my_train_lmdb',32)))
+	f.write(str(lenet('/home/zj/caffe/examples/my/my_train_lmdb',32)))#input lmdb data 
 with open('lenet_auto_test.prototxt','w') as f:
-	f.write(str(lenet('/home/zj/caffe/examples/my/my_test_lmdb',32)))
+	f.write(str(lenet('/home/zj/caffe/examples/my/my_test_lmdb',32)))#input lmdb data
