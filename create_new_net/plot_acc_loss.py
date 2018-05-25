@@ -6,10 +6,10 @@ sys.path.insert(0,caffe_root+'python')
 import caffe
 
 caffe.set_mode_cpu()
-solver=caffe.SGDSolver('/home/zj/caffe/examples/my/lenet_solver.prototxt')
+solver=caffe.SGDSolver('/home/zj/caffe/examples/myfile/solver.prototxt')
 
-niter=1000
-test_interval=200
+niter=10#run 1000th
+test_interval=2#ever 200th 
 train_loss=np.zeros(niter)
 test_acc=np.zeros(int(np.ceil(niter/test_interval)))
 
