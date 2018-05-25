@@ -1,6 +1,6 @@
 import sys
 caffe_root='/home/zj/caffe/'
-sys.path.insert(0,caffe_root+'python')
+sys.path.insert(0,caffe_root+'python') 	#this file shoud be run in .../caffe/examples
 from caffe import layers as L
 from caffe import params as P
 import caffe
@@ -19,6 +19,6 @@ def lenet(lmdb,batch_size):
 	return n.to_proto()
 
 with open('lenet_auto_train.prototxt','w') as f:
-	f.write(str(lenet('/home/zj/caffe/examples/my/my_train_lmdb',32)))#input lmdb data 
+	f.write(str(lenet('/home/zj/caffe/examples/my/my_train_lmdb',32)))	#input lmdb data 
 with open('lenet_auto_test.prototxt','w') as f:
-	f.write(str(lenet('/home/zj/caffe/examples/my/my_test_lmdb',32)))#input lmdb data
+	f.write(str(lenet('/home/zj/caffe/examples/my/my_test_lmdb',32)))	#input lmdb data
