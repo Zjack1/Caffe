@@ -13,7 +13,7 @@ def lenet(lmdb,batch_size):
 	n.conv2=L.Convolution(n.pool1,kernel_size=5,num_output=50,weight_filler=dict(type='xavier'))
 	n.pool2=L.Pooling(n.conv2,kernel_size=2,stride=2,pool=P.Pooling.MAX)
 	n.ip1=L.InnerProduct(n.pool2,num_output=500,weight_filler=dict(type='xavier'))
-	n.relu1=L.ReLU(n.ip1,in_place=Ture)
+	n.relu1=L.ReLU(n.ip1,in_place=True)
 	n.ip2=L.InnerProduct(n.relu1,num_output=10,weight_filler=dict(type='xavier'))
 	n.loss=L.SoftmaxWithLoss(n.ip2,n.label)
 	return n.to_proto()
