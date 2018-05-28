@@ -1,8 +1,8 @@
-# set up Python environment: numpy for numerical routines, and matplotlib for plotting  
+# -*- coding: utf-8 -*- 
 import numpy as np  
 import matplotlib.pyplot as plt  
 # display plots in this notebook  
-%matplotlib inline  
+#matplotlib inline  
   
 # set display defaults  
 plt.rcParams['figure.figsize'] = (10, 10)        # large images  
@@ -11,14 +11,14 @@ plt.rcParams['image.cmap'] = 'gray'  # use grayscale output rather than a (poten
 
 #  we'll add it here explicitly.  
 import sys  
-caffe_root = '/home/zj/caffe/'  # this file should be run from {caffe_root}/examples (otherwise change this line)  
+caffe_root = '/home/lin/caffe/'  # this file should be run from {caffe_root}/examples (otherwise change this line)  
 sys.path.insert(0, caffe_root + 'python')  
   
 import caffe  
 caffe.set_mode_cpu()  
   
-model_def = caffe_root + 'models/bvlc_reference_caffenet/deploy.prototxt'  
-model_weights = caffe_root + 'models/bvlc_reference_caffenet/bvlc_reference_caffenet.caffemodel'  
+model_def = caffe_root + 'examples/myfile/deploy.prototxt'  
+model_weights = caffe_root + 'examples/myfile/caffe_model_iter_1000.caffemodel'  
   
 net = caffe.Net(model_def,      # defines the structure of the model  
                 model_weights,  # contains the trained weights  
@@ -41,7 +41,7 @@ net.blobs['data'].reshape(2,        # batch size
                           3,         # 3-channel (BGR) images  
                           227, 227)  # image size is 227x227  
 
-image = caffe.io.load_image(caffe_root + 'examples/images/car.jpg')  
+image = caffe.io.load_image(caffe_root + 'examples/myfile/f.jpg')  
 transformed_image = transformer.preprocess('data', image)  
 plt.imshow(image)
 
@@ -53,4 +53,14 @@ output = net.forward()
   
 output_prob = output['prob'][0]  # the output probability vector for the first image in the batch  
   
-print 'predicted class is:', output_prob.argmax()
+#print 'predicted class is:', output_prob.argmax()
+if output_prob.argmax()==3:
+	print u'巴士'
+elif output_prob.argmax()==4:
+	print u'恐龙'
+elif output_prob.argmax()==5:
+	print u'大象'
+elif output_prob.argmax()==6:
+	print u'花'
+elif output_prob.argmax()==7:
+	print u'马'
