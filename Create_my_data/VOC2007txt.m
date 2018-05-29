@@ -7,34 +7,43 @@
 xmlfilepath='E:\桌面\VOC2007\Annotations';
 txtsavepath='E:\桌面\VOC2007\ImageSets\Main\';
 
-xmlfile=dir(xmlfilepath);
-numOfxml=length(xmlfile)-2;%减去.和..  总的数据集大小
-
-trainval=sort(randperm(numOfxml,floor(numOfxml/2)));%trainval为数据集的50%
-test=sort(setdiff(1:numOfxml,trainval));%test为剩余50%
-
-trainvalsize=length(trainval);%trainval的大小
-train=sort(trainval(randperm(trainvalsize,floor(trainvalsize/2))));
-val=sort(setdiff(trainval,train));
-
-ftrainval=fopen([txtsavepath 'trainval.txt'],'w');
-ftest=fopen([txtsavepath 'test.txt'],'w');
-ftrain=fopen([txtsavepath 'train.txt'],'w');
-fval=fopen([txtsavepath 'val.txt'],'w');
-
-for i=1:numOfxml
-    if ismember(i,trainval)
-        fprintf(ftrainval,'%s\n',xmlfile(i+2).name(1:end-4));
-        if ismember(i,train)
-            fprintf(ftrain,'%s\n',xmlfile(i+2).name(1:end-4));
-        else
-            fprintf(fval,'%s\n',xmlfile(i+2).name(1:end-4));
-        end
-    else
-        fprintf(ftest,'%s\n',xmlfile(i+2).name(1:end-4));
-    end
-end
-fclose(ftrainval);
-fclose(ftrain);
-fclose(fval);
+trainval_percent=0.8;%trainval占整个数据集的百分比，剩下部分就是test所占百分比  
+train_percent=0.8;%train占trainval的百分比，剩下部分就是val所占百分比  
+  
+  
+%%  
+xmlfile=dir(xmlfilepath);  
+numOfxml=length(xmlfile)-2;%减去.和..  总的数据集大小  
+  
+  
+trainval=sort(randperm(numOfxml,floor(numOfxml*trainval_percent)));  
+test=sort(setdiff(1:numOfxml,trainval));  
+  
+  
+trainvalsize=length(trainval);%trainval的大小  
+train=sort(trainval(randperm(trainvalsize,floor(trainvalsize*train_percent))));  
+val=sort(setdiff(trainval,train));  
+  
+  
+ftrainval=fopen([txtsavepath 'trainval.txt'],'w');  
+ftest=fopen([txtsavepath 'test.txt'],'w');  
+ftrain=fopen([txtsavepath 'train.txt'],'w');  
+fval=fopen([txtsavepath 'val.txt'],'w');  
+  
+  
+for i=1:numOfxml  
+    if ismember(i,trainval)  
+        fprintf(ftrainval,'%s\n',xmlfile(i+2).name(1:end-4));  
+        if ismember(i,train)  
+            fprintf(ftrain,'%s\n',xmlfile(i+2).name(1:end-4));  
+        else  
+            fprintf(fval,'%s\n',xmlfile(i+2).name(1:end-4));  
+        end  
+    else  
+        fprintf(ftest,'%s\n',xmlfile(i+2).name(1:end-4));  
+    end  
+end  
+fclose(ftrainval);  
+fclose(ftrain);  
+fclose(fval);  
 fclose(ftest);
