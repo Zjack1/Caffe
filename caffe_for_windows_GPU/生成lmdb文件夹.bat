@@ -1,0 +1,2 @@
+D:\caffe\Build\x64\Release\convert_imageset.exe --resize_height=256 --resize_width=256 --shuffle --backend=leveldb E:\caffe\caffe\data\re\train\ E:\caffe\caffe\data\re\train.txt  E:\caffe\caffe\examples\myfile\ilsvrc12_train_lmdb
+D:\caffe\Build\x64\Release\convert_imageset.exe --resize_height=256 --resize_width=256 --shuffle --backend=leveldb E:\caffe\caffe\data\re\test\ E:\caffe\caffe\data\re\test.txt  E:\caffe\caffe\examples\myfile\ilsvrc12_val_lmdb
