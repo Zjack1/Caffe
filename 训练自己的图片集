@@ -1,11 +1,17 @@
 https://blog.csdn.net/qq_27923041/article/details/54139887
 https://blog.csdn.net/asukasmallriver/article/details/73500053
 
+
+
 Faster-RCNN+ZF用自己的数据集训练模型(Python版本)
 https://blog.csdn.net/sinat_30071459/article/details/51332084
 
+
+
 tensorflow 1.0 学习：用CNN进行图像分类:
 http://www.cnblogs.com/denny402/p/6931338.html
+
+
 
 py-faster-rcnn + cpu安装及训练自己的数据集
 https://blog.csdn.net/zhang_shuai12/article/details/52295438
@@ -28,5 +34,9 @@ TensorFlow+Faster-RCNN+Ubuntu 环境配置＆代码运行过程
 
 https://blog.csdn.net/Angela_qin/article/details/80921688
 
+
+
+Py-faster-rcnn实现自己的数据train和demo
+https://blog.csdn.net/samylee/article/details/51201744
 
 
