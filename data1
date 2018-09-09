@@ -1,5 +1,5 @@
 s=[]
-a=list('{{}}{}}')
+a=list('{{}')
 #print a
 if len(a)==1:
 	s.append(1)
@@ -15,14 +15,15 @@ if len(a)>1:
 				
 				s.append(1)
 				print a
-				if len(a)>1:
-					break
-				else:
-					t=False
-					break
 				break
-			if len(a):
+			if len(a)<2:
+				break
+			if i==len(a)-2:
 				t=False
 				break
+				
+		if len(a)<2:
+			t=False
+
 		#break
-print s
+print len(s)
