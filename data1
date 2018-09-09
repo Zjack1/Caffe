@@ -1,0 +1,28 @@
+s=[]
+a=list('{{}}{}}')
+#print a
+if len(a)==1:
+	s.append(1)
+
+
+if len(a)>1:
+	t=True
+	while (t):
+		for i in range(len(a)-1):
+			
+			if a[i]=='{' and a[i+1]=='}':
+				del a[i],a[i]
+				
+				s.append(1)
+				print a
+				if len(a)>1:
+					break
+				else:
+					t=False
+					break
+				break
+			if len(a):
+				t=False
+				break
+		#break
+print s
