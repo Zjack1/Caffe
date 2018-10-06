@@ -2,15 +2,12 @@ https://blog.csdn.net/qq_27923041/article/details/54139887
 https://blog.csdn.net/asukasmallriver/article/details/73500053
 
 
-
 Faster-RCNN+ZF用自己的数据集训练模型(Python版本)
 https://blog.csdn.net/sinat_30071459/article/details/51332084
 
 
-
 tensorflow 1.0 学习：用CNN进行图像分类:
 http://www.cnblogs.com/denny402/p/6931338.html
-
 
 
 py-faster-rcnn + cpu安装及训练自己的数据集
@@ -28,10 +25,7 @@ Faster R-CNN基于代码实现的细节
 https://blog.csdn.net/williamyi96/article/details/77648047
 
 
-
-
 TensorFlow+Faster-RCNN+Ubuntu 环境配置＆代码运行过程
-
 https://blog.csdn.net/Angela_qin/article/details/80921688
 
 
@@ -76,15 +70,14 @@ Mask R-CNN详解
 https://blog.csdn.net/WZZ18191171661/article/details/79453780
 
 
-
 Mask_RCNN训练自己的数据，制作类似于COCO数据集中所需要的Json训练集
 https://blog.csdn.net/qq_15969343/article/details/80167215
-
 
 Mask_RCNN：使用自己训练好的模型进行预测
 https://blog.csdn.net/qq_15969343/article/details/80388311
 
-
+Mask R-CNN（六）：搭建环境训练coco数据集
+https://blog.csdn.net/heiheiya/article/details/81481390
 
 
 
