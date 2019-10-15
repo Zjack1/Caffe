@@ -1,0 +1,169 @@
+
+name: "LeNet"						#网络层的名字					
+layer {								#定义一个层
+  name: "mnist"						#层的名字是mnist
+  type: "Data"						#层的类型是"Data",表名数据来源于LMDB或LevelDB.另外其他数据来源还可能来自内存，HDF5，图片等。
+  top: "data"						#输出data
+  top: "label"						#输出label
+  include {
+    phase: TRAIN					#该层只在TRAIN训练的时候有效
+  }
+  transform_param {					#数据的预处理
+    scale: 0.00390625				#1/256，将输入的数据0-255转换到0-1，每个数都乘以0.00390625
+  }
+  data_param {
+    source: "E:/graduate_student/deep_learning/caffe/new_Win_caffe/document/1/caffe-windows/caffe-windows/examples/mnist/lmdb/train_lmdb"	#数据来源
+    batch_size: 64					#每个批处理64张图片
+    backend: LMDB					#数据格式LMDB
+  }
+}
+layer {								
+  name: "mnist"						
+  type: "Data"						
+  top: "data"
+  top: "label"
+  include {
+    phase: TEST						#该层指在TEST测试的时候有效
+  }
+  transform_param {
+    scale: 0.00390625
+  }
+  data_param {
+    source: "E:/graduate_student/deep_learning/caffe/new_Win_caffe/document/1/caffe-windows/caffe-windows/examples/mnist/lmdb/test_lmdb"
+    batch_size: 100					#每个批处理100张图片
+    backend: LMDB
+  }
+}
+layer {
+  name: "conv1"
+  type: "Convolution"				#层的类型是卷积层
+  bottom: "data"					#输入data
+  top: "conv1"						#输出conv1
+  param {							#这个是权值的学习率
+    lr_mult: 1						#学习率系数，最终的学习率是这个学习率系统lr_mult乘以solver.prototxt里面的base_lr
+  }
+  param {							#这个是偏执的学习率
+    lr_mult: 2						#学习率系数，最终的学习率是这个学习率系统lr_mult乘以solver.prototxt里面的base_lr
+  }
+  convolution_param {
+    num_output: 20					#卷积核的个数为20，或者表示输出特征平面的个数为20
+    kernel_size: 5					#卷积核的大小5*5。如果卷积核长和宽不等，则需要用kernel_h和kernel_w分别设置
+    stride: 1						#步长为1。也可以用stride_h和stride_w来设置
+    weight_filler {					#权值初始化
+      type: "xavier"				#使用xavier算法（正则化初始化），也可以设置为"gaussian"
+    }
+    bias_filler {					#偏执初始化
+      type: "constant"				#一般设置为“constant",取值为0
+    }
+  }
+}
+layer {
+  name: "pool1"
+  type: "Pooling"					#层的类型是池化层
+  bottom: "conv1"					#输入conv1
+  top: "pool1"						#输出pooll
+  pooling_param {
+    pool: MAX						#池化方法，常用的方法有MAX，AVE或STOCHASTIC
+    kernel_size: 2					#池化核的大小2*2,如果池化核长和宽不等，则需要用kernel_h和kernel_w分别设置
+    stride: 2						#池化的步长，也可以用stride_h核stride_w来设置
+  }
+}
+layer {
+  name: "conv2"
+  type: "Convolution"				#第2个卷积层
+  bottom: "pool1"
+  top: "conv2"
+  param {
+    lr_mult: 1
+  }
+  param {
+    lr_mult: 2
+  }
+  convolution_param {
+    num_output: 50					#卷积核的个数为50，或者表示输出特征平面的个数为50
+    kernel_size: 5
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+layer {
+  name: "pool2"
+  type: "Pooling"					#第2个池化层
+  bottom: "conv2"
+  top: "pool2"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+  }
+}
+layer {
+  name: "ip1"
+  type: "InnerProduct"				#层的类型是全连接层
+  bottom: "pool2"
+  top: "ip1"
+  param {
+    lr_mult: 1
+  }
+  param {
+    lr_mult: 2
+  }
+  inner_product_param {
+    num_output: 500					#500个神经元
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+layer {
+  name: "relu1"
+  type: "ReLU"						#层的类型’ReLU',激活函数，可以解决梯度消失或梯度爆炸的问题
+  bottom: "ip1" 					#输入ip1
+  top: "ip1"						#输出经过激活函数处理过的ip1
+}
+layer {
+  name: "ip2"
+  type: "InnerProduct"				#第2个全连接层
+  bottom: "ip1"
+  top: "ip2"
+  param {
+    lr_mult: 1
+  }
+  param {
+    lr_mult: 2
+  }
+  inner_product_param {
+    num_output: 10					#10个输出，代表10个分类
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+layer {
+  name: "accuracy"					
+  type: "Accuracy"					#层的类型是"Accuracy"，用来判断准确率
+  bottom: "ip2"						
+  bottom: "label"
+  top: "accuracy"
+  include {
+    phase: TEST
+  }
+}
+layer {
+  name: "loss"
+  type: "SoftmaxWithLoss"			#层的类型是"SoftmaxWithLoss"，输出误差值loss
+  bottom: "ip2"
+  bottom: "label"
+  top: "loss"
+}
