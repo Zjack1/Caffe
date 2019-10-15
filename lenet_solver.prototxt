@@ -1,0 +1,39 @@
+
+#网络模型描述文件
+#也可以用train_net和test_net来对训练模型和测试模型分别设定，这里用同一个模型
+net: "E:/graduate_student/deep_learning/caffe/new_Win_caffe/document/1/caffe-windows/caffe-windows/examples/mnist/lenet_train_test.prototxt"
+ 
+#这个参数要跟test_layer结合起来考虑，在test_layer中一个batch是100，而总共的测试图片是10000张
+#所以这个参数就是10000/100=100，我们测试100次，每次测试100张图片
+test_iter: 100
+# 每训练500次进行一次测试
+test_interval: 500
+# 学习率
+base_lr: 0.01
+#动力
+momentum: 0.9
+#type:SGD #优化算法的选择。这一行可以省略，因为默认值就是SGD，Caffe中一共有6中优化算法可以选择
+#Stochastic Gradient Descent (type: "SGD"), 在Caffe中SGD其实应该是Momentum
+#AdaDelta (type: "AdaDelta"),
+#Adaptive Gradient (type: "AdaGrad"),
+#Adam (type: "Adam"),
+#Nesterov’s Accelerated Gradient (type: "Nesterov")
+#RMSprop (type: "RMSProp")
+ 
+#权重衰减项，其实也就是正则化项，作用是防止过拟合
+weight_decay: 0.0005
+ 
+# 学习率调整策略
+#如果设置为inv,还需要设置一个power,返回base_lr * (1 + gamma * iter) ^ (- power)，其中iter表示当前的迭代次数
+lr_policy: "inv"
+gamma: 0.0001
+power: 0.75
+# 每训练100次屏幕上显示一次，如果设置为0则不显示
+display: 100
+# 最大迭代次数
+max_iter: 10000
+# 快照。可以把训练的model和solver的状态进行保存。每迭代5000次保存一次，如果设置为0则不保存
+snapshot: 5000
+snapshot_prefix: "E:/graduate_student/deep_learning/caffe/new_Win_caffe/document/1/caffe-windows/caffe-windows/examples/mnist/modle/"
+# 选择运行模式
+solver_mode: CPU
